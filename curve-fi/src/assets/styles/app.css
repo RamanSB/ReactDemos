@@ -1,0 +1,10 @@
+body {
+  width: 100vw;
+  height: 100vh;
+  background-color: #a5a4ce;
+  margin: 0px;
+}
+
+.page-body {
+  margin: 0 30% 0 30%;
+}

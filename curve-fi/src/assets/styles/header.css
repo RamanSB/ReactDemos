@@ -1,0 +1,26 @@
+.header {
+  background-color: silver;
+  display: flex;
+  flex-direction: horizontal;
+  justify-content: space-between;
+  padding: 0 36% 0 36%;
+}
+
+.menu-button {
+  background: green;
+  color: white;
+}
+
+.header-button {
+  background: none;
+  border: none;
+  font-family: System, monospace;
+  font-size: 10pt;
+  font-weight: bolder;
+  padding: 0 16px 0 16px;
+}
+
+.header-button:active {
+  background: blue;
+  color: white;
+}

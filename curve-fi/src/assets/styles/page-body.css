@@ -1,0 +1,42 @@
+.display-containers {
+  max-width: 700px;
+  background: #3465a4;
+  margin: 2em auto;
+  box-shadow: 12px 8px #333333;
+  border: 2px solid white;
+  outline: 2px solid white;
+  outline-offset: 2px;
+}
+
+.connection-pane {
+  padding: 14px 12px 14px 12px;
+  color: white;
+  font-family: System, monospace;
+  font-size: 10pt;
+}
+
+.connect-wallet-btn {
+  border: none;
+  background: green;
+  color: white;
+  font-family: System, monospace;
+  font-weight: bold;
+  padding: 0 12px 0 12px;
+  box-shadow: 4px 6px #333333;
+}
+
+.title {
+  text-align: center;
+  padding: 36px;
+}
+
+/* .title:before {
+  content: "";
+  border: 2px solid white;
+  top: 4px;
+  left: 4px;
+  right: 4px;
+  bottom: 4px;
+  z-index: -1;
+  position: absolute;
+} */
