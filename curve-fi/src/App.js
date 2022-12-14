@@ -3,6 +3,7 @@ import ConnectionPane from "./components/ConnectionPane";
 import "./components/Header";
 import Header from "./components/Header";
 import Title from "./components/Title";
+import SwapPane from "./components/SwapPane";
 
 export default function App() {
   return (
@@ -11,6 +12,7 @@ export default function App() {
       <div className="page-body">
         <Title />
         <ConnectionPane />
+        <SwapPane />
       </div>
       {/*<Footer/>*/}
     </div>

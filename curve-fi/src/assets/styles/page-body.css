@@ -1,15 +1,23 @@
 .display-containers {
   max-width: 700px;
-  background: #3465a4;
   margin: 2em auto;
   box-shadow: 12px 8px #333333;
   border: 2px solid white;
   outline: 2px solid white;
   outline-offset: 2px;
+  padding: 36px;
+}
+
+.curve-blue {
+  background: #3465a4;
+}
+
+.curve-gray {
+  background: silver;
 }
 
 .connection-pane {
-  padding: 14px 12px 14px 12px;
+  padding: 18px 36px 18px 36px;
   color: white;
   font-family: System, monospace;
   font-size: 10pt;
@@ -21,13 +29,12 @@
   color: white;
   font-family: System, monospace;
   font-weight: bold;
-  padding: 0 12px 0 12px;
+  padding: 4px 12px 4px 12px;
   box-shadow: 4px 6px #333333;
 }
 
 .title {
   text-align: center;
-  padding: 36px;
 }
 
 /* .title:before {
@@ -40,3 +47,96 @@
   z-index: -1;
   position: absolute;
 } */
+
+#swap-container {
+  inset: 2% 5%;
+  background: blueviolet;
+}
+
+.boxed-header {
+  height: 280px;
+  border: 2px solid black;
+}
+
+.header-perimeter {
+  position: absolute;
+  top: -32px;
+  left: 0;
+  right: 0;
+  margin-left: 35%;
+  margin-right: 35%;
+  background: silver;
+  font-family: ui-monospace;
+  -webkit-line-clamp: 1;
+}
+
+.swap-content {
+  width: auto;
+  height: auto;
+}
+
+#swap-row {
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  margin: 24px 0 24px 0px;
+}
+
+#from-amount::before {
+  content: "Max: ";
+  border: 2px solid red;
+}
+
+#from-currency-container {
+  position: relative;
+  display: inline-block;
+}
+
+.currency-drop-down-btn {
+  border: 4px thin black;
+  cursor: pointer;
+  background: none;
+}
+
+.currency-drop-down-btn:hover {
+  content: "From: ";
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  min-width: 132px;
+  z-index: 1;
+}
+
+.dropdown-content a {
+  display: block;
+  padding: 12px 16px;
+  text-decoration: none;
+}
+
+.dropdown-content > ul {
+  overflow: scroll;
+  max-height: 264px;
+  padding-inline-start: 0px;
+  list-style-type: none;
+  margin-block-start: 0px;
+}
+
+#from-currency-container:hover .dropdown-content {
+  display: block;
+}
+
+.currency-drop-down-btn > div > span {
+  margin-right: 32px;
+}
+
+#from-amount {
+  background: blue;
+  z-index: 1;
+}
+
+#to-amount {
+  background: #505070;
+  z-index: 1;
+}

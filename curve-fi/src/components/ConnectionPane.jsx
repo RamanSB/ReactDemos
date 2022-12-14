@@ -9,7 +9,7 @@
  */
 function ConnectionPane() {
   return (
-    <div className="display-containers connection-pane">
+    <div className="display-containers connection-pane curve-blue">
       <span>You haven't connected a wallet.</span>
       <button className="connect-wallet-btn">Connect wallet</button>
     </div>
