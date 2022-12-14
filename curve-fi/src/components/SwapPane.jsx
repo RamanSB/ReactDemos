@@ -11,6 +11,8 @@ import usdtLogo from "../assets/images/cc-icons/usdt.png";
 import swapIcon from "../assets/images/cc-icons/exchange-alt-solid.svg";
 import { useState } from "react";
 
+const TradeRoutes = {};
+
 function SwapPane() {
   let [initialState, setState] = useState({
     fromAmount: 0,
@@ -34,6 +36,14 @@ function SwapPane() {
         });
       }
     }
+  };
+
+  const SellButton = () => {
+    return (
+      <div>
+        <button className="sell-btn gray">Sell</button>
+      </div>
+    );
   };
 
   const SwapButton = () => {
@@ -97,7 +107,19 @@ function SwapPane() {
         </div>
         <TradeRouteText>{initialState.tradeRoute}</TradeRouteText>
         <AdvancedOptionSection></AdvancedOptionSection>
+        <SellButton />
+        <SwapUnavailableBanner>
+          Swap not available. Please select Compound in pool select.
+        </SwapUnavailableBanner>
       </div>
+    </div>
+  );
+}
+
+function SwapUnavailableBanner({ children }) {
+  return (
+    <div id="unavailable-swap-container">
+      <p>{children}</p>
     </div>
   );
 }
@@ -105,7 +127,7 @@ function SwapPane() {
 function AdvancedOptionSection({ children }) {
   return (
     <div id="advanced-option-container">
-      <button className="connect-wallet-btn">
+      <button className="advanced-option-btn">
         Advanced options
         <i class="fa-solid fa-play space-left rotate-90"></i>
       </button>

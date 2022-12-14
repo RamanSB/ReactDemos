@@ -1,5 +1,6 @@
 :root {
   --default-font: monospace;
+  --curve-blue: #3465a4;
   --text-green: #006000;
 }
 
@@ -28,14 +29,23 @@
   font-size: 10pt;
 }
 
-.connect-wallet-btn {
+.connect-wallet-btn,
+.advanced-option-btn,
+.sell-btn {
   border: none;
-  background: green;
   color: white;
   font-family: System, monospace;
   font-weight: bold;
   padding: 4px 12px 4px 12px;
+}
+
+.connect-wallet-btn {
   box-shadow: 4px 6px #333333;
+  background: green;
+}
+
+.advanced-option-btn {
+  background: green;
 }
 
 .title {
@@ -48,7 +58,7 @@
 }
 
 .boxed-header {
-  height: 280px;
+  height: 248px;
   border: 2px solid black;
 }
 
@@ -198,4 +208,17 @@ ul.options li[aria-selected="true"] {
 
 .rotate-90 {
   transform: rotate(90deg);
+}
+
+.gray {
+  background-color: gray;
+}
+
+#unavailable-swap-container {
+  display: flex;
+  background: var(--curve-blue);
+  margin: 12px 16px 0 16px;
+  padding: 0 12px 0 12px;
+  color: white;
+  font-family: monospace;
 }
