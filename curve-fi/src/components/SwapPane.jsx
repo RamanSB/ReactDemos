@@ -17,6 +17,7 @@ function SwapPane() {
     fromCurrency: "DAI",
     toAmount: 0,
     toCurrency: "USDC",
+    tradeRoute: "Not available",
   });
   console.log(initialState);
 
@@ -35,6 +36,27 @@ function SwapPane() {
     }
   };
 
+  const SwapButton = () => {
+    return (
+      <img
+        src={swapIcon}
+        alt="swap"
+        width="36px"
+        height="36px"
+        style={{ margin: "0 12px 0 6px" }}
+        onClick={() => {
+          setState((initialState) => {
+            return {
+              ...initialState,
+              fromCurrency: initialState.toCurrency,
+              toCurrency: initialState.fromCurrency,
+            };
+          });
+        }}
+      />
+    );
+  };
+
   return (
     <div className="display-containers curve-gray">
       <div
@@ -42,8 +64,10 @@ function SwapPane() {
         style={{ textAlign: "center", position: "relative" }}
       >
         <h4 className="header-perimeter">Swap using all Curve pool</h4>
+        <AnimatedPipe />
         <div className="swap-content">
           <div id="swap-row">
+            {/* extract in to it's own component */}
             <CurrencyOptions
               label="from"
               setParentState={setState}
@@ -56,23 +80,7 @@ function SwapPane() {
                 updateInputAmounts(e);
               }}
             />
-            <img
-              src={swapIcon}
-              alt="swap"
-              width="36px"
-              height="36px"
-              style={{ margin: "0 12px 0 6px" }}
-              onClick={() => {
-                console.log(`Hi!`);
-                setState((initialState) => {
-                  return {
-                    ...initialState,
-                    fromCurrency: initialState.toCurrency,
-                    toCurrency: initialState.fromCurrency,
-                  };
-                });
-              }}
-            />
+            <SwapButton />
             <CurrencyOptions
               label="to"
               setParentState={setState}
@@ -87,7 +95,30 @@ function SwapPane() {
             />
           </div>
         </div>
+        <TradeRouteText>{initialState.tradeRoute}</TradeRouteText>
+        <AdvancedOptionSection></AdvancedOptionSection>
       </div>
+    </div>
+  );
+}
+
+function AdvancedOptionSection({ children }) {
+  return (
+    <div id="advanced-option-container">
+      <button className="connect-wallet-btn">
+        Advanced options
+        <i class="fa-solid fa-play space-left rotate-90"></i>
+      </button>
+    </div>
+  );
+}
+
+function TradeRouteText({ children }) {
+  return (
+    <div id="trade-route-container">
+      <span>
+        Trade routed through: <span id="span-trade-route">{children}</span>
+      </span>
     </div>
   );
 }
@@ -150,7 +181,7 @@ function CurrencyOptions({ label, setParentState, parentState }) {
             style={{
               display: "flex",
               alignItems: "center",
-              width: "140px",
+              width: "112px",
               height: "30px",
             }}
           >
@@ -215,7 +246,7 @@ function CurrencyOptions({ label, setParentState, parentState }) {
                   display: "flex",
                   justifyContent: "start",
                   alignItems: "center",
-                  width: "140px",
+                  width: "112px",
                 }}
               >
                 <img
@@ -235,7 +266,15 @@ function CurrencyOptions({ label, setParentState, parentState }) {
   );
 }
 
-export default SwapPane;
+function AnimatedPipe() {
+  return (
+    <div id="max-span-container">
+      <span style={{ position: "relative", right: "56px" }}>
+        Max: <span className="animated-pipe">|</span>
+      </span>
+    </div>
+  );
+}
 
 class CryptoCurrency {
   constructor(imgPath, ticker) {
@@ -251,3 +290,5 @@ class CryptoCurrency {
     return this.ticker;
   }
 }
+
+export default SwapPane;

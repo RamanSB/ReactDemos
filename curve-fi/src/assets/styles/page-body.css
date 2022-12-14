@@ -1,3 +1,8 @@
+:root {
+  --default-font: monospace;
+  --text-green: #006000;
+}
+
 .display-containers {
   max-width: 700px;
   margin: 2em auto;
@@ -49,13 +54,14 @@
 
 .header-perimeter {
   position: absolute;
-  top: -32px;
+  top: -28px;
   left: 0;
   right: 0;
-  margin-left: 35%;
-  margin-right: 35%;
+  margin-left: 32%;
+  margin-right: 32%;
   background: silver;
-  font-family: ui-monospace;
+  font-family: monospace;
+  font-size: 1em;
   -webkit-line-clamp: 1;
 }
 
@@ -63,7 +69,7 @@
   display: flex;
   flex-flow: row;
   justify-content: center;
-  margin: 24px 0 24px 0px;
+  margin: 8px 0 24px 0px;
 }
 
 #from-amount,
@@ -82,10 +88,6 @@
   background: none;
 }
 
-.currency-drop-down-btn:hover {
-  content: "From: ";
-}
-
 .options {
   list-style-type: none;
   display: none;
@@ -100,7 +102,7 @@
 }
 
 ul.options {
-  border: 1px solid hotpink;
+  border: 1px solid blue;
   display: none;
   list-style: none;
   padding: 4px;
@@ -115,6 +117,85 @@ ul.options li:active,
 ul.options li:focus,
 ul.options li:hover,
 ul.options li[aria-selected="true"] {
-  background: pink;
+  background: blue;
   cursor: pointer;
+  color: white;
+}
+
+#max-span-container {
+  font-family: monospace;
+  text-align: center;
+  margin-top: 16px;
+}
+
+.animated-pipe {
+  display: inline-block;
+  font-size: 1.2em;
+  font-weight: bold;
+  transform: rotate(0deg);
+  animation-name: rotate-pipe;
+  animation-fill-mode: forwards;
+  animation-duration: 2s;
+  animation-direction: normal;
+  animation-iteration-count: infinite;
+}
+
+@keyframes rotate-pipe {
+  from {
+    transform: rotate(0deg);
+  }
+  12.5% {
+    transform: rotate(45deg);
+  }
+  25% {
+    transform: rotate(90deg);
+  }
+  37.5% {
+    transform: rotate(135deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  62.5% {
+    transform: rotate(225deg);
+  }
+  75% {
+    transform: rotate(270deg);
+  }
+  87.5% {
+    transform: rotate(315deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+#trade-route-container {
+  font-family: monospace;
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+}
+
+#trade-route-container > span {
+  position: relative;
+  margin-right: 12px;
+}
+
+#span-trade-route {
+  color: var(--text-green);
+  font-weight: bold;
+}
+
+#advanced-option-container {
+  display: flex;
+  margin: 16px 0 0 16px;
+}
+
+.space-left {
+  margin-left: 8px;
+}
+
+.rotate-90 {
+  transform: rotate(90deg);
 }
