@@ -18,6 +18,22 @@ function SwapPane() {
     toAmount: 0,
     toCurrency: "USDC",
   });
+  console.log(initialState);
+
+  const updateInputAmounts = (e) => {
+    const inputValue = e.target.value;
+    if (!Number.isNaN(inputValue.toString())) {
+      if (e.target.id.toString().includes("to")) {
+        setState((initialState) => {
+          return { ...initialState, toAmount: inputValue };
+        });
+      } else if (e.target.id.toString().includes("from")) {
+        setState((initialState) => {
+          return { ...initialState, fromAmount: inputValue };
+        });
+      }
+    }
+  };
 
   return (
     <div className="display-containers curve-gray">
@@ -28,16 +44,47 @@ function SwapPane() {
         <h4 className="header-perimeter">Swap using all Curve pool</h4>
         <div className="swap-content">
           <div id="swap-row">
-            <FromCurrencyOptions />
-            <input id="from-amount" />
+            <CurrencyOptions
+              label="from"
+              setParentState={setState}
+              parentState={initialState}
+            />
+            <input
+              id="from-amount"
+              type="number"
+              onChange={(e) => {
+                updateInputAmounts(e);
+              }}
+            />
             <img
               src={swapIcon}
               alt="swap"
               width="36px"
+              height="36px"
               style={{ margin: "0 12px 0 6px" }}
+              onClick={() => {
+                console.log(`Hi!`);
+                setState((initialState) => {
+                  return {
+                    ...initialState,
+                    fromCurrency: initialState.toCurrency,
+                    toCurrency: initialState.fromCurrency,
+                  };
+                });
+              }}
             />
-            <FromCurrencyOptions />
-            <input id="to-amount" />
+            <CurrencyOptions
+              label="to"
+              setParentState={setState}
+              parentState={initialState}
+            />
+            <input
+              id="to-amount"
+              type="number"
+              onChange={(e) => {
+                updateInputAmounts(e);
+              }}
+            />
           </div>
         </div>
       </div>
@@ -45,52 +92,143 @@ function SwapPane() {
   );
 }
 
-function CryptoCurrencyItem({ children, logo }) {
-  return (
-    <>
-      <img
-        src={logo}
-        alt=""
-        width="24px"
-        height="24px"
-        style={{ marginRight: "12px", padding: "4px" }}
-      />
-      <span>{children}</span>
-    </>
-  );
-}
+function CurrencyOptions({ label, setParentState, parentState }) {
+  const [isOptionsOpen, setIsOptionsOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState(0);
 
-function FromCurrencyOptions() {
+  const toggleOptions = () => {
+    setIsOptionsOpen(!isOptionsOpen);
+  };
+
+  const cryptoCurrencies = [
+    new CryptoCurrency(daiLogo, "DAI"),
+    new CryptoCurrency(usdcLogo, "USDC"),
+    new CryptoCurrency(usdtLogo, "USDT"),
+    new CryptoCurrency(tusdLogo, "TUSD"),
+    new CryptoCurrency(busdLogo, "BUSD"),
+    new CryptoCurrency(susdLogo, "sUSD"),
+    new CryptoCurrency(usdpaxLogo, "USDPAX"),
+    new CryptoCurrency(renBTCLogo, "renBTC"),
+    new CryptoCurrency(wBTCLogo, "wBTC"),
+    new CryptoCurrency(sBTCLogo, "sBTC"),
+    new CryptoCurrency(usdtLogo, "HBTC"),
+    new CryptoCurrency(usdtLogo, "GUSD"),
+    new CryptoCurrency(usdtLogo, "HUSD"),
+  ];
+
+  const setSelectedThenCloseDropdown = (index) => {
+    setSelectedOption(index);
+    setIsOptionsOpen(false);
+    if (label === "from") {
+      setParentState((initialState) => {
+        return {
+          ...initialState,
+          fromCurrency: cryptoCurrencies[index].getTicker(),
+        };
+      });
+    } else if (label === "to") {
+      setParentState((initialState) => {
+        return {
+          ...initialState,
+          toCurrency: cryptoCurrencies[index].getTicker(),
+        };
+      });
+    }
+  };
+
   return (
-    <div id="from-currency-container">
-      <button className="currency-drop-down-btn">
-        <div style={{ display: "flex", alignItems: "center", flexFlow: "row" }}>
-          <CryptoCurrencyItem logo={daiLogo}>DAI</CryptoCurrencyItem>
-          <i className="fa-solid fa-chevron-down" id="from-currency"></i>
-        </div>
-      </button>
-      <div className="dropdown-content">
-        <ul>
-          {cryptoCurrencies.map((cryptoCurrency) => {
-            return (
-              <a
-                href="#"
+    <div className="wrapper">
+      <div className="container">
+        <button
+          type="button"
+          onClick={toggleOptions}
+          aria-haspopup="listbox"
+          aria-expanded={isOptionsOpen}
+          className={isOptionsOpen ? "expanded" : ""}
+        >
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              width: "140px",
+              height: "30px",
+            }}
+          >
+            <img
+              width="24px"
+              height="24px"
+              src={cryptoCurrencies
+                .find((x) => {
+                  if (
+                    label === "from" &&
+                    x.getTicker() === parentState.fromCurrency
+                  ) {
+                    return x.getImgPath();
+                  } else if (
+                    label === "to" &&
+                    x.getTicker() === parentState.toCurrency
+                  ) {
+                    return x.getImgPath();
+                  }
+                  return null;
+                })
+                .getImgPath()}
+              alt={cryptoCurrencies[selectedOption].getTicker()}
+              style={{ margin: "0 16px 0 0" }}
+            />
+            {cryptoCurrencies
+              .find((x) => {
+                if (
+                  label === "from" &&
+                  x.getTicker() === parentState.fromCurrency
+                ) {
+                  return x;
+                } else if (
+                  label === "to" &&
+                  x.getTicker() === parentState.toCurrency
+                ) {
+                  return x;
+                }
+              })
+              .getTicker()}
+            <i class="fa-solid fa-angle-down" style={{ flexGrow: 1 }}></i>
+          </div>
+        </button>
+        <ul
+          className={`options ${isOptionsOpen ? "show" : ""}`}
+          tabIndex={-1}
+          role="listbox"
+        >
+          {cryptoCurrencies.map((option, index) => (
+            <li
+              key={index}
+              tabIndex={0}
+              role="option"
+              aria-selected={selectedOption === index}
+              id={option}
+              onClick={() => {
+                setSelectedThenCloseDropdown(index);
+              }}
+            >
+              <div
                 style={{
                   display: "flex",
-                  alignItems: "center",
-                  flexFlow: "row",
                   justifyContent: "start",
-                  textDecoration: "none",
-                  padding: "4px",
-                  minHeight: "16px",
+                  alignItems: "center",
+                  width: "140px",
                 }}
               >
-                <CryptoCurrencyItem logo={cryptoCurrency.getImgPath()}>
-                  {cryptoCurrency.getTicker()}
-                </CryptoCurrencyItem>
-              </a>
-            );
-          })}
+                <img
+                  width="24px"
+                  height="24px"
+                  src={option.getImgPath()}
+                  alt={option.getTicker()}
+                  style={{ margin: "4px 16px 0 0" }}
+                />
+                {option.getTicker()}
+              </div>
+            </li>
+          ))}
         </ul>
       </div>
     </div>
@@ -113,19 +251,3 @@ class CryptoCurrency {
     return this.ticker;
   }
 }
-
-const cryptoCurrencies = [
-  new CryptoCurrency(daiLogo, "DAI"),
-  new CryptoCurrency(usdcLogo, "USDC"),
-  new CryptoCurrency(usdtLogo, "USDT"),
-  new CryptoCurrency(tusdLogo, "TUSD"),
-  new CryptoCurrency(busdLogo, "BUSD"),
-  new CryptoCurrency(susdLogo, "sUSD"),
-  new CryptoCurrency(usdpaxLogo, "USDPAX"),
-  new CryptoCurrency(renBTCLogo, "renBTC"),
-  new CryptoCurrency(wBTCLogo, "wBTC"),
-  new CryptoCurrency(sBTCLogo, "sBTC"),
-  new CryptoCurrency(usdtLogo, "HBTC"),
-  new CryptoCurrency(usdtLogo, "GUSD"),
-  new CryptoCurrency(usdtLogo, "HUSD"),
-];
